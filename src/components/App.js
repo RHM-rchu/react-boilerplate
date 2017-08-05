@@ -1,11 +1,22 @@
 import React from "react"
+import ClinicList from "./ClinicList"
 
 
-
-
-
+/**
+ *
+ * List users
+ *
+ */
 export default class app extends React.Component {
-  render() {
+  /**
+   *
+   * Constructor
+   *
+   * @param props
+   */
+  constructor(props) {
+    super(props)
+
     /* need to query db for clinics here */
     const clinics = []
     for (let i=1; i<10; i++) {
@@ -16,31 +27,16 @@ export default class app extends React.Component {
       })
     }
 
+    this.state = {
+      clinics: clinics,
+    }
+
+  }
+
+
+  render() {
     return (
-      <table>
-        <thead>
-          <tr>
-            <th>clinicUid</th>
-            <th>clinics</th>
-            <th>email</th>
-            <th>Edit</th>
-            <th>Delete</th>
-          </tr>
-        </thead>
-        <tbody>
-          {clinics.map( (clinic, index) => {
-            return (
-              <tr key={clinic.clinicUid}>
-                <td>{clinic.clinicUid}</td>
-                <td>{clinic.clinic}</td>
-                <td>{clinic.email}</td>
-                <td><a href={'/clinic/' + clinic.clinicUid}>Edit</a></td>
-                <td><button data-id={clinic.clinicUid}>Delete</button></td>
-              </tr>
-            )
-          })}
-        </tbody>
-      </table>
+      <ClinicList clinics={this.state.clinics}/>
     )
   }
 
