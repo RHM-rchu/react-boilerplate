@@ -1,13 +1,14 @@
 import React from "react"
+import { connect } from "react-redux"
 import PropTypes from 'prop-types'
 import ClinicListElement from "./ClinicListElement"
 
 /**
  *
- * Display User component
+ * Display Table for Clinics component
  *
  */
-export default class ClinicList extends React.Component {
+class ClinicList extends React.Component {
   render() {
     return (
       <table>
@@ -16,6 +17,7 @@ export default class ClinicList extends React.Component {
             <th>clinicUid</th>
             <th>clinics</th>
             <th>email</th>
+            <th>sites</th>
             <th>Edit</th>
             <th>Delete</th>
           </tr>
@@ -31,7 +33,16 @@ export default class ClinicList extends React.Component {
     )
   }
 }
-// prop checks
-ClinicList.propTypes = {
-  clinics: PropTypes.array.isRequired,
+
+
+
+function mapStateToProps(state) {
+  ClinicList.propTypes = {
+    clinics: PropTypes.array.isRequired,
+  }
+  return ({
+    clinics: state.clinics
+  })
 }
+
+export default connect(mapStateToProps)(ClinicList)

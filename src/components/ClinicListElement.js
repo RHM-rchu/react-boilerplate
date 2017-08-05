@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 
 /**
  *
- * Display User list
+ * return Clinic row
  *
  */
 export default class ClinicListElement extends React.Component {
@@ -14,6 +14,7 @@ export default class ClinicListElement extends React.Component {
         <td>{clinic.clinicUid}</td>
         <td>{clinic.clinic}</td>
         <td>{clinic.email}</td>
+        <td>{clinic.rand}</td>
         <td><a href={'/clinic/' + clinic.clinicUid}>Edit</a></td>
         <td><button data-id={clinic.clinicUid}>Delete</button></td>
       </tr>
