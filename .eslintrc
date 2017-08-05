@@ -1,0 +1,37 @@
+{
+  "env": {
+      "browser": true,
+      "es6": true
+  },
+  "extends": "plugin:react/recommended",
+  "parserOptions": {
+      "ecmaFeatures": {
+          "experimentalObjectRestSpread": true,
+          "jsx": true
+      },
+      "sourceType": "module"
+  },
+  "plugins": [
+      "react"
+    ],
+  "rules": {
+    "semi": [
+      "error",
+      "never",
+    ],
+    "no-console":0,
+    "global-require": 0,
+    "import/no-dynamic-require": 0,
+        "indent": [
+            "error",
+            2
+        ],
+  },
+  "globals": {
+    "describe": false,
+    "it": false,
+    "jest": false,
+    "beforeEach": false,
+    "afterEach": false
+  }
+}
