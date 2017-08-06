@@ -11,7 +11,9 @@ export default class app extends React.Component {
 
   render() {
     return (
-      <ClinicList />
+      <div className="container">
+        <ClinicList />
+      </div>
     )
   }
 

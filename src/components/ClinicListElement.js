@@ -1,5 +1,6 @@
 import React from "react"
 import PropTypes from 'prop-types'
+import { Button, Glyphicon } from "react-bootstrap"
 
 /**
  *
@@ -15,8 +16,18 @@ export default class ClinicListElement extends React.Component {
         <td>{clinic.clinic}</td>
         <td>{clinic.email}</td>
         <td>{clinic.rand}</td>
-        <td><a href={'/clinic/' + clinic.clinicUid}>Edit</a></td>
-        <td><button data-id={clinic.clinicUid}>Delete</button></td>
+        <td>
+          <a href={'/clinic/' + clinic.clinicUid}>
+          <Button bsSize="xsmall">
+          Edit <Glyphicon glyph="edit"/>
+          </Button>
+          </a>
+        </td>
+        <td>
+          <Button bsSize="xsmall" data-id={clinic.clinicUid} data-clinicuid={clinic.clinicUid}>
+          Delete <Glyphicon glyph="remove-circle"/>
+          </Button>
+        </td>
       </tr>
     )
   }

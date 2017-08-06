@@ -5,6 +5,8 @@ import { createStore } from "redux"
 import { reducers } from "./reducers/index"
 import App from "./components/App"
 
+import './stylesheets/main.scss'
+
 
 /* need to query db for clinics here */
 let clinics = []

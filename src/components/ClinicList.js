@@ -1,5 +1,6 @@
 import React from "react"
 import { connect } from "react-redux"
+import { Table } from "react-bootstrap"
 import PropTypes from 'prop-types'
 import ClinicListElement from "./ClinicListElement"
 
@@ -11,7 +12,7 @@ import ClinicListElement from "./ClinicListElement"
 class ClinicList extends React.Component {
   render() {
     return (
-      <table>
+      <Table bordered hover responsive striped>
         <thead>
           <tr>
             <th>clinicUid</th>
@@ -29,7 +30,7 @@ class ClinicList extends React.Component {
             )
           })}
         </tbody>
-      </table>
+      </Table>
     )
   }
 }
