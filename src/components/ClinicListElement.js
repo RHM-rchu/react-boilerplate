@@ -55,7 +55,7 @@ class ClinicListElement extends React.Component {
     const clinicUid = Number(event.target.dataset.clinicuid)
     const clinic = event.target.dataset.clinic
     this.props.dispatch({
-      type: 'modal.modealDeleteShow',
+      type: 'modal.modalDeleteShow',
       component: 'Clinic',
       id: clinicUid,
       name: clinic,
