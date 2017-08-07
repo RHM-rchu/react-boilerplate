@@ -8,7 +8,7 @@ import App from "./components/App"
 import './stylesheets/main.scss'
 
 
-/* need to query db for clinics here */
+/* mock data, need to query db for clinics here */
 let clinics = []
 for (let i=1; i<=10; i++) {
   clinics.push({
@@ -20,7 +20,9 @@ for (let i=1; i<=10; i++) {
 }
 
 const initialState = {
-  clinics: clinics,
+  theDatas: {
+    list: clinics,
+  },
 }
 
 const store = createStore(reducers, initialState)

@@ -1,3 +1,12 @@
-export function reducers (state, action) {
-  return state
-}
+import { combineReducers } from "redux"
+import commonModal from "./commonModal"
+
+
+/**
+ *
+ * reducers
+ *
+ */
+export const reducers = combineReducers({
+  theDatas: commonModal,
+})
