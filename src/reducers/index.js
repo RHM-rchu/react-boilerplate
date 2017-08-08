@@ -1,4 +1,5 @@
 import { combineReducers } from "redux"
+import { routerReducer } from "react-router-redux"
 import commonModal from "./commonModal"
 
 
@@ -8,6 +9,7 @@ import commonModal from "./commonModal"
  *
  */
 export const reducers = combineReducers({
+  routing: routerReducer,
   theDatas: commonModal,
 })
 

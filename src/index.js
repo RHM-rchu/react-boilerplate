@@ -1,12 +1,18 @@
 import React from "react"
 import { render } from "react-dom"
+import { browserHistory, Router, Route, IndexRoute } from "react-router"
+import { syncHistoryWithStore, routerMiddleware } from "react-router-redux"
 import { Provider } from "react-redux"
-import { createStore } from "redux"
+import { createStore, applyMiddleware } from "redux"
+
 import { reducers } from "./reducers/index"
 import App from "./components/App"
 
 import './stylesheets/main.scss'
 
+import Index from "./pages/Index"
+import ClinicEdit from "./pages/ClinicEdit"
+import NotFound from "./pages/NotFound"
 
 /* mock data, need to query db for clinics here */
 let clinics = []
@@ -25,11 +31,20 @@ const initialState = {
   },
 }
 
-const store = createStore(reducers, initialState)
+// create store
+let middleware = applyMiddleware(routerMiddleware(browserHistory))
+const store = createStore(reducers, initialState, middleware)
+const history = syncHistoryWithStore(browserHistory, store)
 
 render(
   <Provider store={store}>
-    <App/>
+    <Router history={history}>
+      <Route path="/" component={App}>
+        <IndexRoute component={Index}/>
+        <Route path="clinic-edit(/:id)" component={ClinicEdit}/>
+        <Route path="*" component={NotFound}/>
+      </Route>
+    </Router>
   </Provider>,
   document.getElementById('app')
 )

@@ -18,7 +18,7 @@ export default function commonModal(state = {}, action){
  * reducer static class
  *
  */
-var reducerClass = {
+const reducerClass = {
   /**
    *
    * Show Modal

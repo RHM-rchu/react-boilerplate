@@ -2,6 +2,7 @@ import React from "react"
 import PropTypes from 'prop-types'
 import { Button, Glyphicon } from "react-bootstrap"
 import { connect } from "react-redux"
+import { Link } from "react-router"
 /**
  *
  * return Clinic row
@@ -19,8 +20,12 @@ class ClinicListElement extends React.Component {
      */
     this.modalDeleteShow = this.modalDeleteShow.bind(this)
   }
+
   render() {
     const clinic = this.props.clinic
+
+
+
     return (
       <tr>
         <td>{clinic.clinicUid}</td>
@@ -28,11 +33,11 @@ class ClinicListElement extends React.Component {
         <td>{clinic.email}</td>
         <td>{clinic.rand}</td>
         <td>
-          <a href={'/clinic/' + clinic.clinicUid}>
+          <Link to={'/clinic-edit/' + clinic.clinicUid}>
             <Button bsSize="xsmall">
-          Edit <Glyphicon glyph="edit"/>
+            Edit <Glyphicon glyph="edit"/>
             </Button>
-          </a>
+          </Link>
         </td>
         <td>
           <Button bsSize="xsmall" data-clinicuid={clinic.clinicUid} data-clinic={clinic.clinic} onClick={this.modalDeleteShow}>
@@ -44,13 +49,20 @@ class ClinicListElement extends React.Component {
   }
 
 
+
+  // static get propTypes() {
+  //   return {
+  //     dispatch: PropTypes.any,
+  //   }
+  // }
+
   /**
- *
- * Prompt to delete Clinic:
- *  onClick action from `render()`
- *  dispatch values
- *
- */
+   *
+   * Prompt to delete Clinic:
+   *  onClick action from `render()`
+   *  dispatch values
+   *
+   */
   modalDeleteShow(event) {
     const clinicUid = Number(event.target.dataset.clinicuid)
     const clinic = event.target.dataset.clinic
