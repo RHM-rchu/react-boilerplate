@@ -10,14 +10,18 @@ import { Link } from "react-router"
  */
 class ClinicListElement extends React.Component {
 
+  static  propTypes() {
+    return {
+      clinic: PropTypes.object.isRequired,
+      dispatch: PropTypes.any,
+    }
+  }
+
   constructor(props) {
     super(props)
-    /**
-     *
-     * bind `this` object to new instance `this.modalDeleteShow`
-     *  to pass the onclick method in the `render()` below
-     *
-     */
+
+    // bind `this` object to new instance `this.modalDeleteShow`
+    //  to pass the onclick method in the `render()` below
     this.modalDeleteShow = this.modalDeleteShow.bind(this)
   }
 
@@ -50,12 +54,6 @@ class ClinicListElement extends React.Component {
 
 
 
-  // static get propTypes() {
-  //   return {
-  //     dispatch: PropTypes.any,
-  //   }
-  // }
-
   /**
    *
    * Prompt to delete Clinic:
@@ -64,9 +62,11 @@ class ClinicListElement extends React.Component {
    *
    */
   modalDeleteShow(event) {
+    const { dispatch } = this.props
     const clinicUid = Number(event.target.dataset.clinicuid)
     const clinic = event.target.dataset.clinic
-    this.props.dispatch({
+    dispatch({
+    // this.props.dispatch({
       type: 'modal.modalDeleteShow',
       component: 'Clinic',
       id: clinicUid,
@@ -77,10 +77,11 @@ class ClinicListElement extends React.Component {
 
 }
 
-// prop checks
-ClinicListElement.propTypes = {
-  clinic: PropTypes.object.isRequired,
-}
+// // prop checks
+// ClinicListElement.propTypes = {
+//   clinic: PropTypes.object.isRequired,
+//   dispatch: PropTypes.any,
+// }
 
 
 

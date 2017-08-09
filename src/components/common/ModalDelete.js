@@ -1,6 +1,7 @@
 import React from "react"
 import { Modal, Button } from "react-bootstrap"
 import { connect } from "react-redux"
+import PropTypes from 'prop-types'
 
 /**
  *
@@ -15,16 +16,17 @@ class ModalDelete extends React.Component {
     this.itemDelete = this.itemDelete.bind(this)
   }
 
-  // static get propTypes() {
-  //   return {
-  //     show: PropTypes.any,
-  //     user: PropTypes.any,
-  //     hideDelete: PropTypes.any,
-  //     itemDelete: PropTypes.any,
-  //     modalDelete: PropTypes.any,
-  //     dispatch: PropTypes.any,
-  //   }
-  // }
+  // prop checks
+  static get propTypes() {
+    return {
+      show: PropTypes.any,
+      user: PropTypes.any,
+      hideDelete: PropTypes.any,
+      itemDelete: PropTypes.any,
+      modalDelete: PropTypes.any,
+      dispatch: PropTypes.any,
+    }
+  }
 
   render() {
     const {show, user, hideDelete, itemDelete} = this.props
@@ -76,6 +78,9 @@ class ModalDelete extends React.Component {
   }
 
 }
+
+
+
 
 
 /**
