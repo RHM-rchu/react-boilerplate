@@ -1,4 +1,4 @@
-import React from "react"
+import React, { Component } from "react"
 import PropTypes from 'prop-types'
 import { Button, Glyphicon } from "react-bootstrap"
 import { connect } from "react-redux"
@@ -8,9 +8,9 @@ import { Link } from "react-router"
  * return Clinic row
  *
  */
-class ClinicListElement extends React.Component {
+class ClinicListElement extends Component {
 
-  static  propTypes() {
+  static get propTypes() {
     return {
       clinic: PropTypes.object.isRequired,
       dispatch: PropTypes.any,
@@ -54,19 +54,16 @@ class ClinicListElement extends React.Component {
 
 
 
-  /**
-   *
-   * Prompt to delete Clinic:
-   *  onClick action from `render()`
-   *  dispatch values
-   *
-   */
+
+
+  // Prompt to delete Clinic:
+  //  onClick action from `render()`
+  //  dispatch values
   modalDeleteShow(event) {
     const { dispatch } = this.props
     const clinicUid = Number(event.target.dataset.clinicuid)
     const clinic = event.target.dataset.clinic
     dispatch({
-    // this.props.dispatch({
       type: 'modal.modalDeleteShow',
       component: 'Clinic',
       id: clinicUid,
@@ -76,12 +73,6 @@ class ClinicListElement extends React.Component {
   }
 
 }
-
-// // prop checks
-// ClinicListElement.propTypes = {
-//   clinic: PropTypes.object.isRequired,
-//   dispatch: PropTypes.any,
-// }
 
 
 

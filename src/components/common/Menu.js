@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Component } from 'react'
 import { Nav, NavItem, Glyphicon } from "react-bootstrap"
 import { IndexLinkContainer, LinkContainer } from "react-router-bootstrap"
 
@@ -7,7 +7,7 @@ import { IndexLinkContainer, LinkContainer } from "react-router-bootstrap"
  * Menu compenent
  *
  */
-export default class Menu extends React.Component {
+export default class Menu extends Component {
 
   render() {
     return (

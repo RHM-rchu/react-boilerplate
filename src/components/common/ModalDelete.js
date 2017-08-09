@@ -1,4 +1,4 @@
-import React from "react"
+import React, { Component } from "react"
 import { Modal, Button } from "react-bootstrap"
 import { connect } from "react-redux"
 import PropTypes from 'prop-types'
@@ -8,7 +8,7 @@ import PropTypes from 'prop-types'
  * Render Modal to confirm delete: float window from react-bootstrap
  *
  */
-class ModalDelete extends React.Component {
+class ModalDelete extends Component {
 
   constructor(props){
     super(props)
@@ -47,24 +47,18 @@ class ModalDelete extends React.Component {
     )
   }
 
-  /**
-   *
-   * Close Prompt to delete Clinic:
-   *  onClick action from `render()`
-   *  dispatch values
-   *
-   */
+
+  // Close Prompt to delete Clinic:
+  //  onClick action from `render()`
+  //  dispatch values
   modalDeleteHide(event) {
     this.props.dispatch({
       type: 'modal.modalDeleteHide',
     })
   }
 
-  /**
-   *
-   * Delete Clinic
-   *
-   */
+
+  // Delete Clinic
   itemDelete(event){
     this.props.dispatch({
       type: 'modal.modalClinicDelete',

@@ -1,4 +1,4 @@
-import React from "react"
+import React, { Component } from "react"
 import { connect } from "react-redux"
 import { Table } from "react-bootstrap"
 import PropTypes from 'prop-types'
@@ -11,7 +11,7 @@ import ClinicDelete from "./common/ModalDelete"
  * Display Table for Clinics component
  *
  */
-class ClinicList extends React.Component {
+class ClinicList extends Component {
   render() {
     return (
       <div>
