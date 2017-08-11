@@ -22,19 +22,18 @@ class ClinicList extends Component {
   }
 
   render() {
-    const per_page = process.env.LIMIT_PER_PAGE || 10
+    const per_page = process.env.LIMIT_PER_PAGE || 15
     const pages = Math.ceil(this.props.clinics.length/per_page)
     const current_page = this.props.page
     const start_offset = (current_page - 1) * per_page
     let start_count = 0
-console.log('------.'+process.env.LIMIT_PER_PAGE)
-console.log(process.env)
+
     return (
       <div>
         <Table bordered hover responsive striped>
           <thead>
             <tr>
-              <th>clinicUid</th>
+              <th>clinicUid </th>
               <th>clinics</th>
               <th>email</th>
               <th>sites</th>
@@ -54,7 +53,7 @@ console.log(process.env)
           </tbody>
         </Table>
 
-        <Pagination className="clinic-pagination pull-right" bsSize="medium" maxButtons={process.env.LIMIT_PER_PAGE || 10} first last next prev boundaryLinks items={pages} activePage={current_page} onSelect={this.changePage}>
+        <Pagination className="clinic-pagination pull-right" bsSize="medium" maxButtons={parseInt(process.env.LIMIT_PER_PAGE)||10} first last next prev boundaryLinks items={pages} activePage={current_page} onSelect={this.changePage}>
         </Pagination>
 
         <ClinicDelete/>
@@ -83,6 +82,8 @@ function mapStateToProps(state) {
 
 ClinicList.propTypes = {
   clinics: PropTypes.array.isRequired,
+  dispatch: PropTypes.func.isRequired,
+  page: PropTypes.number.isRequired,
 }
 
 

@@ -13,8 +13,6 @@ import './stylesheets/main.scss'
 import Index from "./pages/Index"
 import ClinicEdit from "./pages/ClinicEdit"
 import NotFound from "./pages/NotFound"
-// import dotenv from 'dotenv'
-// dotenv.config()
 
 
 /* mock data, need to query db for clinics here */

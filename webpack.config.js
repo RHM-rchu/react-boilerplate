@@ -1,10 +1,7 @@
-var app_root = 'src'
-var path = require('path')
-var CleanWebpackPlugin = require('clean-webpack-plugin')
-// require('dotenv').config({
-//     silent: true
-// })
-const Dotenv = require('dotenv-webpack')
+const app_root = 'src'
+const path = require('path')
+const CleanWebpackPlugin = require('clean-webpack-plugin')
+const dotenv = require('dotenv-webpack')
 
 module.exports = {
   app_root: app_root, // the app root folder, needed by the other webpack configs
@@ -47,14 +44,14 @@ module.exports = {
       verbose: true,
       dry: false, // true for simulation
     }),
-    new Dotenv({
+    new dotenv({
       path: './.env', // Path to .env file (this is the default)
-      safe: true // load .env.example (defaults to "false" which does not use dotenv-safe)
-    }),
+      safe: false // load .env.example (defaults to "false" which does not use dotenv-safe)
+    })
   ],
   node: {
     // console: true,
-    fs: 'empty',
+    // fs: 'empty',
     // net: 'empty',
     // tls: 'empty',
   }

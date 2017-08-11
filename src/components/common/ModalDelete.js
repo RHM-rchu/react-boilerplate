@@ -46,7 +46,7 @@ class ModalDelete extends Component {
       </Modal>
     )
   }
-// <Button bsStyle="primary" onClick={this.itemDelete}>Yes</Button>
+  // <Button bsStyle="primary" onClick={this.itemDelete}>Yes</Button>
 
   // Close Prompt to delete Clinic:
   //  onClick action from `render()`
