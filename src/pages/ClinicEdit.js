@@ -12,7 +12,7 @@ export default class ClinicEdit extends React.Component {
     return (
       <div>
         <PageHeader>Clinic Add/Edit</PageHeader>
-        FORM
+        FORM 1
       </div>
     )
   }

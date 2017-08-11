@@ -67,7 +67,7 @@ const reducerClass = {
    * @returns
    *
    */
-  modalDelete: function(newState, action) {
+  modalClinicDelete: function(newState, action) {
     /**
      *
      * need to hook this into the db delete

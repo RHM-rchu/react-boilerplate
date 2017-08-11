@@ -17,7 +17,7 @@ export default class Menu extends Component {
         </IndexLinkContainer>
         <LinkContainer to="/clinic-edit">
           <NavItem>
-          Add User <Glyphicon glyph="plus-sign"/>
+          Add Clinic <Glyphicon glyph="plus-sign"/>
           </NavItem>
         </LinkContainer>
       </Nav>

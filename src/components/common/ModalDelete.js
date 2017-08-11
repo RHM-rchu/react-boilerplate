@@ -41,12 +41,12 @@ class ModalDelete extends Component {
         </Modal.Header>
         <Modal.Footer>
           <Button onClick={this.modalDeleteHide}>No</Button>
-          <Button bsStyle="primary" onClick={this.itemDelete}>Yes</Button>
+          <Button bsStyle="primary" onClick={() => this.itemDelete(this.props.modalDelete.component)}>Yes</Button>
         </Modal.Footer>
       </Modal>
     )
   }
-
+// <Button bsStyle="primary" onClick={this.itemDelete}>Yes</Button>
 
   // Close Prompt to delete Clinic:
   //  onClick action from `render()`
@@ -60,8 +60,9 @@ class ModalDelete extends Component {
 
   // Delete Clinic
   itemDelete(event){
+    // console.log(`can also use param passed here---->${event}`)
     this.props.dispatch({
-      type: 'modal.modalClinicDelete',
+      type: `modal.modal${this.props.modalDelete.component}Delete`,
       id: this.props.modalDelete.id
     })
     // hide modal

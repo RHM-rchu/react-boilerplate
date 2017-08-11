@@ -13,10 +13,13 @@ import './stylesheets/main.scss'
 import Index from "./pages/Index"
 import ClinicEdit from "./pages/ClinicEdit"
 import NotFound from "./pages/NotFound"
+// import dotenv from 'dotenv'
+// dotenv.config()
+
 
 /* mock data, need to query db for clinics here */
 let clinics = []
-for (let i=1; i<=10; i++) {
+for (let i=1; i<=67; i++) {
   clinics.push({
     clinicUid: i,
     clinic: `GRP-${i}`,

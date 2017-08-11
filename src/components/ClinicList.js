@@ -1,6 +1,7 @@
 import React, { Component } from "react"
+import { Table, Pagination } from "react-bootstrap"
 import { connect } from "react-redux"
-import { Table } from "react-bootstrap"
+import { push } from "react-router-redux"
 import PropTypes from 'prop-types'
 
 import ClinicListElement from "./ClinicListElement"
@@ -12,7 +13,22 @@ import ClinicDelete from "./common/ModalDelete"
  *
  */
 class ClinicList extends Component {
+
+  constructor(props) {
+    super(props)
+
+    // bind <this> to all event methods
+    this.changePage = this.changePage.bind(this)
+  }
+
   render() {
+    const per_page = process.env.LIMIT_PER_PAGE || 10
+    const pages = Math.ceil(this.props.clinics.length/per_page)
+    const current_page = this.props.page
+    const start_offset = (current_page - 1) * per_page
+    let start_count = 0
+console.log('------.'+process.env.LIMIT_PER_PAGE)
+console.log(process.env)
     return (
       <div>
         <Table bordered hover responsive striped>
@@ -28,18 +44,31 @@ class ClinicList extends Component {
           </thead>
           <tbody>
             {this.props.clinics.map( (clinic, index) => {
-              return (
-                <ClinicListElement key={clinic.clinicUid} clinic={clinic}/>
-              )
+              if(index >= start_offset && start_count< per_page) {
+                start_count++
+                return (
+                  <ClinicListElement key={clinic.clinicUid} clinic={clinic}/>
+                )
+              }
             })}
           </tbody>
         </Table>
+
+        <Pagination className="clinic-pagination pull-right" bsSize="medium" maxButtons={process.env.LIMIT_PER_PAGE || 10} first last next prev boundaryLinks items={pages} activePage={current_page} onSelect={this.changePage}>
+        </Pagination>
 
         <ClinicDelete/>
 
       </div>
     )
   }
+
+
+  // chnage the current page
+  changePage(page) {
+    this.props.dispatch(push('?page=' + page))
+  }
+
 }
 
 
@@ -47,6 +76,7 @@ function mapStateToProps(state) {
 
   return ({
     clinics: state.theDatas.list,
+    page: Number(state.routing.locationBeforeTransitions.query.page) || 1
   })
 }
 
