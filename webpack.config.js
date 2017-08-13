@@ -7,7 +7,7 @@ module.exports = {
   app_root: app_root, // the app root folder, needed by the other webpack configs
   entry: [
     // http://gaearon.github.io/react-hot-loader/getstarted/
-    'webpack-dev-server/client?http://localhost:8080',
+    'webpack-dev-server/client?http://localhost:#{defaultSettings.port}',
     'webpack/hot/only-dev-server',
     'babel-polyfill',
     __dirname + '/' + app_root + '/index.js',
@@ -21,7 +21,7 @@ module.exports = {
     loaders: [
       {
         test: /\.js$/,
-        loaders: ['react-hot', 'babel'],
+        loaders: ['babel-loader'],
         exclude: /node_modules/,
       },
       {
@@ -47,7 +47,7 @@ module.exports = {
     new dotenv({
       path: './.env', // Path to .env file (this is the default)
       safe: false // load .env.example (defaults to "false" which does not use dotenv-safe)
-    })
+    }),
   ],
   node: {
     // console: true,
