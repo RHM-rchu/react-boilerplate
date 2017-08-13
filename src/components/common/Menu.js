@@ -13,7 +13,9 @@ export default class Menu extends Component {
     return (
       <Nav bsStyle="pills">
         <IndexLinkContainer to="/">
-          <NavItem>Home</NavItem>
+          <NavItem>
+          Home <Glyphicon glyph="home"/>
+          </NavItem>
         </IndexLinkContainer>
         <LinkContainer to="/clinic-edit">
           <NavItem>

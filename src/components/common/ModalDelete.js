@@ -5,6 +5,7 @@ import PropTypes from 'prop-types'
 
 /**
  *
+ * Generic MODAL popup
  * Render Modal to confirm delete: float window from react-bootstrap
  *
  */
