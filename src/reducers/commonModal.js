@@ -1,3 +1,4 @@
+// import _ from 'lodash'
 import { reducerCall } from './index'
 
 
@@ -76,6 +77,51 @@ const reducerClass = {
     for (const index in newState.list) {
       if(newState.list[index].clinicUid === action.id) {
         newState.list.splice(index, 1)
+        break
+      }
+    }
+    return newState
+  },
+  /**
+   *
+   * Add a Clinic
+   *
+   */
+  Add: function(newState, action) {
+    const id = Math.floor((Math.random() * 345345))
+    // add the clinic to
+    newState.list.push({
+      clinicUid: id,
+      clinic: action.clinic,
+      email: action.email,
+      rand: Math.floor(Math.random() * (50 - 10 + 1)) + 10,
+    })
+    return newState
+  },
+  /**
+   *
+   * Edit a Clinic
+   *
+   */
+  Edit: function(newState, action) {
+    // _.each(newState.list, (clinic, index) => {
+    //   if(clinic.clinicUid === action.clinicUid) {
+    //     Object.assign(clinic, {
+    //       clinicUid: action.clinicUid,
+    //       clinic: action.clinic,
+    //       email: action.email,
+    //       rand: Math.floor(Math.random() * (50 - 10 + 1)) + 10,
+    //     })
+    //   }
+    // })
+    for (const clinic of newState.list) {
+      if(clinic.clinicUid === action.clinicUid) {
+        Object.assign(clinic, {
+          clinicUid: action.clinicUid,
+          clinic: action.clinic,
+          email: action.email,
+          rand: Math.floor(Math.random() * (50 - 10 + 1)) + 10,
+        })
         break
       }
     }

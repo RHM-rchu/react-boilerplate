@@ -4,6 +4,9 @@ import { PageHeader, Form, FormGroup, Col, Button, FormControl, InputGroup, Glyp
 import { Field, reduxForm } from 'redux-form'
 import { connect } from 'react-redux'
 import { validateEmail } from '../helpers.js'
+import { goBack } from 'react-router-redux'
+
+
 
 
 /**
@@ -11,7 +14,6 @@ import { validateEmail } from '../helpers.js'
  * Define Form elelemnts and attribues for output
  *
  */
-
 const FIELDS = {
   clinic: {
     type: 'input',
@@ -37,11 +39,14 @@ const FIELDS = {
  */
 class ClinicEdit extends React.Component {
   // add or edit form_data
-  // form_type
+  form_type
 
   constructor(props) {
     super(props)
     this.form_type = props.initialValues.clinicUid > 0 ? 'Edit' : 'Add'
+
+    // bind <this> to formSubmit
+    this.formSubmit = this.formSubmit.bind(this)
   }
 
 
@@ -59,7 +64,7 @@ class ClinicEdit extends React.Component {
     return (
       <div>
         <PageHeader>Clinic {this.form_type}</PageHeader>
-        <Form horizontal>
+        <Form horizontal onSubmit={this.props.handleSubmit(this.formSubmit)}>
           <FormGroup>
             <Col smOffset={2} sm={8}>
               {fieldsList}
@@ -70,7 +75,6 @@ class ClinicEdit extends React.Component {
       </div>
     )
   }
-
 
 
   /**
@@ -111,6 +115,19 @@ class ClinicEdit extends React.Component {
   }
 
 
+  // form submit
+  formSubmit(values) {
+// console.log(values)
+    this.props.dispatch({
+      type: 'clinics.' +  this.form_type,
+      clinicUid: values.clinicUid,
+      clinic: values.clinic,
+      email: values.email,
+    })
+
+    // redirect to previous pages
+    this.props.dispatch(goBack())
+  }
 
 }
 
@@ -121,28 +138,32 @@ class ClinicEdit extends React.Component {
 ClinicEdit = reduxForm({
   form: 'clinic_edit', //unique form name
   fields: _.keys(FIELDS),
-  validate: function(values) {
-    let errors = {}
-    _.each(FIELDS, (type, field) => {
-      _.each(FIELDS[field].validate, (check, key) => {
-        switch(check) {
-          case 'email':
-            if(! validateEmail(values[field])) {
-              return errors.email = `${field} format is invalid`
-            }
-            break
-          case 'blank':
-          default:
-            if(!values[field]) {
-              return errors[field] = `Enter a ${field}`
-            }
-            break
-        }
-      })
-    })
-    return errors
-  },
+  validate: validate,
 }, null, null)(ClinicEdit)
+
+
+// validate form
+function validate(values) {
+  let errors = {}
+  _.each(FIELDS, (type, field) => {
+    _.each(FIELDS[field].validate, (check, key) => {
+      switch(check) {
+        case 'email':
+          if(! validateEmail(values[field])) {
+            return errors.email = `${field} format is invalid`
+          }
+          break
+        case 'blank':
+        default:
+          if(!values[field]) {
+            return errors[field] = `Enter a ${field}`
+          }
+          break
+      }
+    })
+  })
+  return errors
+}
 
 // get selected item, defalt
 function mapStateToProps(state, ownProps) {
@@ -157,11 +178,7 @@ function mapStateToProps(state, ownProps) {
       form_data = clinic
     }
   })
-  // for(const clinic of state.theDatas.list) {
-  //   if(clinic.clinicUid === Number(ownProps.params.id)) {
-  //     form_data = clinic
-  //   }
-  // }
+
   return {
     initialValues: form_data
   }
