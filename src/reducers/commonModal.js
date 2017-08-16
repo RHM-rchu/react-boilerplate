@@ -1,4 +1,3 @@
-// import _ from 'lodash'
 import { reducerCall } from './index'
 
 
@@ -104,16 +103,6 @@ const reducerClass = {
    *
    */
   Edit: function(newState, action) {
-    // _.each(newState.list, (clinic, index) => {
-    //   if(clinic.clinicUid === action.clinicUid) {
-    //     Object.assign(clinic, {
-    //       clinicUid: action.clinicUid,
-    //       clinic: action.clinic,
-    //       email: action.email,
-    //       rand: Math.floor(Math.random() * (50 - 10 + 1)) + 10,
-    //     })
-    //   }
-    // })
     for (const clinic of newState.list) {
       if(clinic.clinicUid === action.clinicUid) {
         Object.assign(clinic, {
@@ -127,6 +116,16 @@ const reducerClass = {
     }
     return newState
   },
+  /**
+   *
+   * Clinics list saga fetch was successful
+   *
+   */
+
+  fetchListSuccess: function(newState, action) {
+    newState.list = action.theDatas
+    return newState
+  }
 }
 
 

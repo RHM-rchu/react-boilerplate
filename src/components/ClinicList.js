@@ -1,5 +1,5 @@
 import React, { Component } from "react"
-import { Table, Pagination } from "react-bootstrap"
+import { Table, Pagination, ProgressBar } from "react-bootstrap"
 import { connect } from "react-redux"
 import { push } from "react-router-redux"
 import PropTypes from 'prop-types'
@@ -16,7 +16,12 @@ class ClinicList extends Component {
 
   constructor(props) {
     super(props)
-
+    // when no clinics update state with api
+    if(0 === this.props.clinics.length) {
+      this.props.dispatch({
+        type: 'clinicFetchList'
+      })
+    }
     // bind <this> to all event methods
     this.changePage = this.changePage.bind(this)
   }
@@ -27,39 +32,45 @@ class ClinicList extends Component {
     const current_page = this.props.page
     const start_offset = (current_page - 1) * per_page
     let start_count = 0
+    if(this.props.clinics.length) {
+      // show clinics list
+      return (
+        <div>
+          <Table bordered hover responsive striped>
+            <thead>
+              <tr>
+                <th>clinicUid </th>
+                <th>clinics</th>
+                <th>email</th>
+                <th>sites</th>
+                <th>Edit</th>
+                <th>Delete</th>
+              </tr>
+            </thead>
+            <tbody>
+              {this.props.clinics.map( (clinic, index) => {
+                if(index >= start_offset && start_count< per_page) {
+                  start_count++
+                  return (
+                    <ClinicListElement key={clinic.clinicUid} clinic={clinic}/>
+                  )
+                }
+              })}
+            </tbody>
+          </Table>
 
-    return (
-      <div>
-        <Table bordered hover responsive striped>
-          <thead>
-            <tr>
-              <th>clinicUid </th>
-              <th>clinics</th>
-              <th>email</th>
-              <th>sites</th>
-              <th>Edit</th>
-              <th>Delete</th>
-            </tr>
-          </thead>
-          <tbody>
-            {this.props.clinics.map( (clinic, index) => {
-              if(index >= start_offset && start_count< per_page) {
-                start_count++
-                return (
-                  <ClinicListElement key={clinic.clinicUid} clinic={clinic}/>
-                )
-              }
-            })}
-          </tbody>
-        </Table>
+          <Pagination className="clinic-pagination pull-right" bsSize="medium" maxButtons={parseInt(process.env.LIMIT_PER_PAGE)||10} first last next prev boundaryLinks items={pages} activePage={current_page} onSelect={this.changePage}>
+          </Pagination>
 
-        <Pagination className="clinic-pagination pull-right" bsSize="medium" maxButtons={parseInt(process.env.LIMIT_PER_PAGE)||10} first last next prev boundaryLinks items={pages} activePage={current_page} onSelect={this.changePage}>
-        </Pagination>
+          <ClinicDelete/>
 
-        <ClinicDelete/>
-
-      </div>
-    )
+        </div>
+      )
+    } else {
+      return (
+        <ProgressBar active now={100}/>
+      )
+    }
   }
 
 
@@ -72,9 +83,8 @@ class ClinicList extends Component {
 
 
 function mapStateToProps(state) {
-
   return ({
-    clinics: state.theDatas.list,
+    clinics: state.theDatas.list || [],
     page: Number(state.routing.locationBeforeTransitions.query.page) || 1
   })
 }

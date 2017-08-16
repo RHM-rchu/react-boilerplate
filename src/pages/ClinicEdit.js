@@ -1,5 +1,6 @@
 import React from 'react'
 import _ from 'lodash'
+import PropTypes from 'prop-types'
 import { PageHeader, Form, FormGroup, Col, Button, FormControl, InputGroup, Glyphicon, HelpBlock } from 'react-bootstrap'
 import { Field, reduxForm } from 'redux-form'
 import { connect } from 'react-redux'
@@ -39,7 +40,7 @@ const FIELDS = {
  */
 class ClinicEdit extends React.Component {
   // add or edit form_data
-  form_type
+  // form_type
 
   constructor(props) {
     super(props)
@@ -117,7 +118,7 @@ class ClinicEdit extends React.Component {
 
   // form submit
   formSubmit(values) {
-// console.log(values)
+    // console.log(values)
     this.props.dispatch({
       type: 'clinics.' +  this.form_type,
       clinicUid: values.clinicUid,
@@ -148,17 +149,17 @@ function validate(values) {
   _.each(FIELDS, (type, field) => {
     _.each(FIELDS[field].validate, (check, key) => {
       switch(check) {
-        case 'email':
-          if(! validateEmail(values[field])) {
-            return errors.email = `${field} format is invalid`
-          }
-          break
-        case 'blank':
-        default:
-          if(!values[field]) {
-            return errors[field] = `Enter a ${field}`
-          }
-          break
+      case 'email':
+        if(! validateEmail(values[field])) {
+          return errors.email = `${field} format is invalid`
+        }
+        break
+      case 'blank':
+      default:
+        if(!values[field]) {
+          return errors[field] = `Enter a ${field}`
+        }
+        break
       }
     })
   })
@@ -183,6 +184,14 @@ function mapStateToProps(state, ownProps) {
     initialValues: form_data
   }
 
+}
+
+ClinicEdit.propTypes = {
+  initialValues: PropTypes.object.isRequired,
+  dispatch: PropTypes.func.isRequired,
+  handleSubmit: PropTypes.func.isRequired,
+  invalid: PropTypes.bool,
+  submitting: PropTypes.bool,
 }
 
 // connect vars to ClinicEdit
