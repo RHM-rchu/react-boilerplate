@@ -189,7 +189,7 @@ function mapStateToProps(state, ownProps) {
 ClinicEdit.propTypes = {
   initialValues: PropTypes.object.isRequired,
   dispatch: PropTypes.func.isRequired,
-  handleSubmit: PropTypes.func.isRequired,
+  handleSubmit: PropTypes.func,
   invalid: PropTypes.bool,
   submitting: PropTypes.bool,
 }
