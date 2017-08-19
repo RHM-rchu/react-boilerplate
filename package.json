@@ -13,7 +13,8 @@
     "url": ""
   },
   "scripts": {
-    "start": "webpack-dev-server --inline --hot --history-api-fallback --host localhost --port 8080",
+    "start": "webpack-dev-server --inline --hot --history-api-fallback",
+    "start2": "webpack-dev-server --inline --hot --history-api-fallback --host localhost --port 8080",
     "build-dev": "webpack --config webpack.dev.config.js",
     "server": "nodemon src/server.js --watch 'server.js' --exec babel-node --presets es2015",
     "build-prod": "webpack -p --config webpack.prod.config.js",
