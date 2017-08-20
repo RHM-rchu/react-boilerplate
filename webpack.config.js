@@ -8,7 +8,6 @@ dotenv4Webpack.config({
 })
 
 
-console.log(`------> ${process.env.CLIENT_HOST}:${process.env.CLIENT_PORT} <----------`)
 module.exports = {
   app_root: app_root, // the app root folder, needed by the other webpack configs
   entry: [
