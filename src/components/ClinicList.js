@@ -7,7 +7,7 @@ import PropTypes from 'prop-types'
 import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table'
 
 
-import ClinicListElement from "./ClinicListElement"
+// import ClinicListElement from "./ClinicListElement"
 import ClinicDelete from "./common/ModalDelete"
 import '../../node_modules/react-bootstrap-table/dist/react-bootstrap-table-all.min.css'
 
@@ -34,7 +34,20 @@ class ClinicList extends Component {
       defaultSortName: 'clinic',  // default sort column name
       defaultSortOrder: 'desc'  // default sort order
     }
+
+    // // bind `this` object to new instance `this.modalDeleteShow`
+    // //  to pass the onclick method in the `render()` below
+    // this.modalDeleteShow = this.modalDeleteShow.bind(this)
+
+    // this.handleDeleteButtonClick = (onClick) => {
+    //   // Custom your onClick event here,
+    //   // it's not necessary to implement this function if you have no any process before onClick
+    //   console.log('This is my custom function for DeleteButton click event');
+    //   onClick();
+    // }
   }
+
+
 
   render() {
     const per_page = Number(process.env.LIMIT_PER_PAGE) || 15
@@ -58,10 +71,16 @@ class ClinicList extends Component {
       firstPage: 'First', // First page button text
       lastPage: 'Last', // Last page button text
       paginationShowsTotal: this.renderShowsTotal,  // Accept bool or function
-      paginationPosition: 'top',  // default is bottom, top and both is all available
+      paginationPosition: 'bottom',  // default is bottom, top and both is all available
       // hideSizePerPage: true, //> You can hide the dropdown for sizePerPage
       // alwaysShowAllBtns: true, // Always show next and previous button
       withFirstAndLast: true, //> Hide the going to First and Last page button
+      // clearSearch: true,
+      // clearSearchBtn: this.createCustomClearButton,
+      // deleteBtn: this.handleDeleteButtonClick,
+    }
+    const selectRow = {
+      mode: 'checkbox'
     }
 
     if(this.props.clinics.length) {
@@ -70,9 +89,9 @@ class ClinicList extends Component {
 
                     // <ClinicListElement key={clinic.clinicUid} clinic={clinic}/>
       <div>
-        <BootstrapTable ref='table' data={ this.props.clinics } striped hover condensed pagination={ true } options={options}>
+        <BootstrapTable ref='table' data={ this.props.clinics } selectRow={ selectRow } deleteRow striped hover condensed search pagination={ true } options={options}>
             <TableHeaderColumn dataField='clinicUid' isKey={ true } dataSort={ true } width="100">clinicUid</TableHeaderColumn>
-            <TableHeaderColumn dataField='clinic' dataSort={ true }  filter={ { type: 'TextFilter', delay: 1000 } }>clinic</TableHeaderColumn>
+            <TableHeaderColumn dataField='clinic' dataSort={ true }>clinic</TableHeaderColumn>
             <TableHeaderColumn dataField='email' dataSort={ true }>email</TableHeaderColumn>
             <TableHeaderColumn dataField='rand' dataSort={ true }>rand</TableHeaderColumn>
         </BootstrapTable>
@@ -95,6 +114,35 @@ class ClinicList extends Component {
   // chnage the current page
   changePage(page) {
     this.props.dispatch(push('?page=' + page))
+  }
+
+
+  createCustomDeleteButton(onBtnClick) {
+    return (
+      <DeleteButton
+        btnText='Delete Selected'
+        btnContextual='btn-success'
+        className='my-custom-class'
+        btnGlyphicon='glyphicon-edit'
+        onClick={ e => this.handleDeleteButtonClick(onClick) }/>
+    )
+  }
+
+  // Prompt to delete Clinic:
+  //  onClick action from `render()`
+  //  dispatch values
+  modalDeleteShow(event) {
+console.log(event)
+    // const { dispatch } = this.props
+    // const clinicUid = Number(event.target.dataset.clinicuid)
+    // const clinic = event.target.dataset.clinic
+    // dispatch({
+    //   type: 'modal.modalDeleteShow',
+    //   component: 'Clinic',
+    //   id: clinicUid,
+    //   name: clinic,
+    //   message: 'Are you sure you want to delete this Clinic',
+    // })
   }
 
 
