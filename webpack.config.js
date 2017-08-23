@@ -28,7 +28,7 @@ module.exports = {
       {
         test: /\.js$/,
         loaders: ['babel-loader'],
-        exclude: /node_modules/,
+        exclude: /node_modules/
       },
       {
         // https://github.com/jtangelder/sass-loader
@@ -38,7 +38,8 @@ module.exports = {
       {
         test: /\.css$/,
         loaders: ['style', 'css'],
-      }
+      },
+{ test: /\.(png|woff|woff2|eot|ttf|svg)$/, loader: 'url-loader?limit=100000' },
     ],
   },
   devServer: {
