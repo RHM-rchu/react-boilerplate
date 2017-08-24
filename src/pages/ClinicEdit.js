@@ -8,6 +8,7 @@ import { validateEmail } from '../helpers.js'
 import { goBack } from 'react-router-redux'
 import FilteredMultiSelect from 'react-filtered-multiselect'
 
+
 import 'bootstrap/dist/css/bootstrap.min.css'
 import 'bootstrap/dist/css/bootstrap-theme.min.css'
 const BOOTSTRAP_CLASSES = {
@@ -61,7 +62,9 @@ class ClinicEdit extends React.Component {
 
   render() {
 
-    var {selectedOptions} = this.state
+    let {selectedOptions} = this.state
+console.log(`2.------>this.state`)
+console.log(selectedOptions)
     const fieldsList = Object.keys(FIELDS).map(function(key, i) {
       if(FIELDS[key].glyph) {
         return <Field key={i} name={key} component={ClinicEdit.renderFieldsWGlyph}/>
@@ -71,11 +74,59 @@ class ClinicEdit extends React.Component {
 
     })
 
+// import options from './mockData2'
+// let options = require('./mockData2')
 let options = [
   {"id": 1, "name": "5*Gelish-Oplule"},
   {"id": 2, "name": "7*Uagren"},
   {"id": 3, "name": "8*Churkun"},
-]
+  {"id": 4, "name": "8401.00 Partial Photic Boundary"},
+  {"id": 5, "name": "A Fine Disregard for Awkward Facts"},
+  {"id": 6, "name": "A Momentary Lapse Of Sanity"},
+  {"id": 7, "name": "A Series Of Unlikely Explanations"},
+  {"id": 8, "name": "A Ship With A View"},
+  {"id": 9, "name": "Abalule-Sheliz"},
+  {"id": 10, "name": "Ablation"},
+  {"id": 11, "name": "Absolutely No You-Know-What"},
+  {"id": 12, "name": "Abundance Of Onslaught"},
+  {"id": 13, "name": "Advanced Case Of Chronic Patheticism"},
+  {"id": 14, "name": "All The Same, I Saw It First"},
+  {"id": 15, "name": "All Through With This Niceness And Negotiation Stuff"},
+  {"id": 16, "name": "Another Fine Product From The Nonsense Factory"},
+  {"id": 17, "name": "Anticipation Of A New Lover's Arrival, The"},
+  {"id": 18, "name": "Anything Legal Considered"},
+  {"id": 19, "name": "Appeal To Reason"},
+  {"id": 20, "name": "Arbitrary"},
+  {"id": 21, "name": "Armchair Traveller"},
+  {"id": 22, "name": "Arrested Development"},
+  {"id": 23, "name": "Attitude Adjuster"},
+  {"id": 24, "name": "Awkward Customer"},
+  {"id": 25, "name": "Bad for Business"},
+  {"id": 26, "name": "Beats Working"},
+  {"id": 27, "name": "Big Sexy Beast"},
+  {"id": 28, "name": "Bodhisattva, OAQS"},
+  {"id": 29, "name": "Boo!"},
+  {"id": 30, "name": "Bora Horza Gobuchul"},
+  {"id": 31, "name": "Break Even"},
+  {"id": 32, "name": "But Who's Counting?"},
+  {"id": 33, "name": "Caconym"},
+  {"id": 34, "name": "Cantankerous"},
+  {"id": 35, "name": "Cargo Cult"},
+  {"id": 36, "name": "Charitable View"},
+  {"id": 37, "name": "Charming But Irrational"},
+  {"id": 38, "name": "Clear Air Turbulence"},
+  {"id": 39, "name": "Congenital Optimist"},
+  {"id": 40, "name": "Contents May Differ"},
+  {"id": 41, "name": "Conventional Wisdom"},
+  {"id": 42, "name": "Credibility Problem"},
+  {"id": 43, "name": "Death and Gravity"},
+  {"id": 44, "name": "Demented But Determined"},
+  {"id": 45, "name": "Determinist"},
+  {"id": 46, "name": "Different Tan"},
+  {"id": 47, "name": "Displacement Activity"},
+  {"id": 48, "name": "Don't Try This At Home"},
+  ]
+
     return (
       <div>
         <PageHeader>Clinic {this.form_type}</PageHeader>
@@ -88,7 +139,7 @@ let options = [
               <div className="col-md-5">
                 <FilteredMultiSelect
                   classNames={BOOTSTRAP_CLASSES}
-                  onChange={this.handleSelectionChange}
+                  onChange={this.multisel_handleSelectionChange}
                   options={options}
                   selectedOptions={selectedOptions}
                   textProp="name"
@@ -99,16 +150,13 @@ let options = [
               <div className="col-md-5">
                 {selectedOptions.length === 0 && <p>(nothing selected yet)</p>}
                 {selectedOptions.length > 0 && <ol>
-                  {selectedOptions.map((ship, i) => <li key={ship.id}>
-                    {`${ship.name} `}
-                    <span style={{cursor: 'pointer'}} onClick={() => this.handleDeselect(i)}>
+                  {selectedOptions.map((list, i) => <li key={list.id}>
+                    {`${list.name} `}
+                    <span style={{cursor: 'pointer'}} onClick={() => this.multisel_handleDeselect(i)}>
                       &times;
                     </span>
                   </li>)}
                 </ol>}
-                {selectedOptions.length > 0 && <button style={{marginLeft: 20}} className="btn btn-default" onClick={this.handleClearSelection}>
-                  Clear Selection
-                </button>}
               </div>
 
               <Button type="submit" disabled={this.props.invalid || this.props.submitting}><Glyphicon glyph="floppy-disk"/> Save Clinic </Button>
@@ -119,16 +167,16 @@ let options = [
     )
   }
 
-  handleDeselect(index) {
+
+  multisel_handleDeselect = (index) => {
     var selectedOptions = this.state.selectedOptions.slice()
     selectedOptions.splice(index, 1)
     this.setState({selectedOptions})
   }
-
-  handleClearSelection = (e) => {
+  multisel_handleClearSelection = (e) => {
     this.setState({selectedOptions: []})
   }
-  handleSelectionChange = (selectedOptions) => {
+  multisel_handleSelectionChange = (selectedOptions) => {
     selectedOptions.sort((a, b) => a.id - b.id)
     this.setState({selectedOptions})
   }
@@ -173,6 +221,8 @@ let options = [
 
 
   formSubmit = (values) => {
+console.log(`1.------>values`)
+console.log(this.state.selectedOptions)
     this.props.dispatch({
       type: 'clinics.' +  this.form_type,
       clinicUid: values.clinicUid,
@@ -180,7 +230,7 @@ let options = [
       email: values.email,
     })
     // redirect to previous pages
-    this.props.dispatch(goBack())
+    // this.props.dispatch(goBack())
   }
 
 
@@ -223,8 +273,8 @@ function validate(values) {
 // get selected item, defalt
 function mapStateToProps(state, ownProps) {
   let form_data = {
-    id: 0,
-    clinic: '',
+    clinicUid: 0,
+    clinic: '123',
     email: '',
   }
 
