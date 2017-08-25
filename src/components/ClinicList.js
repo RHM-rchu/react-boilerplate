@@ -1,6 +1,7 @@
 import React, { Component } from "react"
-import { Table, Pagination, ProgressBar } from "react-bootstrap"
+import { Table, Pagination, ProgressBar, Button, Glyphicon } from "react-bootstrap"
 import { connect } from "react-redux"
+import { Link } from "react-router"
 import { push } from "react-router-redux"
 import PropTypes from 'prop-types'
 import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table'
@@ -33,6 +34,40 @@ class ClinicList extends Component {
     this.changePage = this.changePage.bind(this)
   }
 
+  clinicEditButton = (cell, clinic) => {
+    return (
+          <Link to={'/clinic-edit/' + clinic.clinicUid}>
+            <Button bsSize="xsmall">
+            Edit <Glyphicon glyph="edit"/>
+            </Button>
+          </Link>
+    )
+  }
+  clinicDeleteButton = (cell, clinic) => {
+    return (
+          <Button bsSize="xsmall" data-clinicuid={clinic.clinicUid} data-clinic={clinic.clinic} onClick={this.modalDeleteShow}>
+          Delete <Glyphicon glyph="remove-circle"/>
+          </Button>
+    )
+  }
+
+
+  // Prompt to delete Clinic:
+  //  onClick action from `render()`
+  //  dispatch values
+  modalDeleteShow = (event) => {
+    const { dispatch } = this.props
+    const clinicUid = Number(event.target.dataset.clinicuid)
+    const clinic = event.target.dataset.clinic
+    dispatch({
+      type: 'modal.modalDeleteShow',
+      component: 'Clinic',
+      id: clinicUid,
+      name: clinic,
+      message: 'Are you sure you want to delete this Clinic',
+    })
+  }
+
   render() {
     const per_page = Number(process.env.LIMIT_PER_PAGE) || 15
     const pages = Math.ceil(this.props.clinics.length/per_page)
@@ -63,19 +98,19 @@ class ClinicList extends Component {
       // clearSearchBtn: this.createCustomClearButton,
       // deleteBtn: this.handleDeleteButtonClick,
     }
-    const selectRow = {
-      mode: 'checkbox'
-    }
+
     if(this.props.clinics.length) {
       // show clinics list
       return (
         <div>
 
-        <BootstrapTable ref='table' data={ this.props.clinics } selectRow={ selectRow } deleteRow striped hover condensed search pagination={ true } options={options}>
+        <BootstrapTable ref='table' data={ this.props.clinics }  striped hover condensed search pagination={ true } options={options}>
             <TableHeaderColumn dataField='clinicUid' isKey={ true } dataSort={ true } width="100">clinicUid</TableHeaderColumn>
             <TableHeaderColumn dataField='clinic' dataSort={ true }>clinic</TableHeaderColumn>
             <TableHeaderColumn dataField='email' dataSort={ true }>email</TableHeaderColumn>
             <TableHeaderColumn dataField='rand' dataSort={ true }>rand</TableHeaderColumn>
+            <TableHeaderColumn dataField='clinicUid' dataSort={ false } dataFormat={this.clinicEditButton}>Edit</TableHeaderColumn>
+            <TableHeaderColumn dataField='clinicUid' dataSort={ false } dataFormat={this.clinicDeleteButton}>Delete</TableHeaderColumn>
         </BootstrapTable>
 
 
