@@ -63,7 +63,7 @@ class ClinicEdit extends React.Component {
   render() {
 
     let {selectedOptions} = this.state
-console.log(`2.------>this.state`)
+console.log(`[ClinidEdit.render]------>`)
 console.log(selectedOptions)
     const fieldsList = Object.keys(FIELDS).map(function(key, i) {
       if(FIELDS[key].glyph) {
@@ -221,8 +221,9 @@ let options = [
 
 
   formSubmit = (values) => {
-console.log(`1.------>values`)
+console.log(`[ClinicEdit.formSubmit]------`)
 console.log(this.state.selectedOptions)
+console.log(values)
     this.props.dispatch({
       type: 'clinics.' +  this.form_type,
       clinicUid: values.clinicUid,
@@ -274,7 +275,7 @@ function validate(values) {
 function mapStateToProps(state, ownProps) {
   let form_data = {
     clinicUid: 0,
-    clinic: '123',
+    clinic: '',
     email: '',
   }
 

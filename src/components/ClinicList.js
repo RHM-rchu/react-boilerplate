@@ -3,9 +3,11 @@ import { Table, Pagination, ProgressBar } from "react-bootstrap"
 import { connect } from "react-redux"
 import { push } from "react-router-redux"
 import PropTypes from 'prop-types'
+import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table'
 
 import ClinicListElement from "./ClinicListElement"
 import ClinicDelete from "./common/ModalDelete"
+import '../../node_modules/react-bootstrap-table/dist/react-bootstrap-table-all.min.css'
 
 /**
  *
@@ -22,45 +24,61 @@ class ClinicList extends Component {
         type: 'clinicFetchList'
       })
     }
+
+    this.options = {
+      defaultSortName: 'clinic',  // default sort column name
+      defaultSortOrder: 'desc'  // default sort order
+    }
     // bind <this> to all event methods
     this.changePage = this.changePage.bind(this)
   }
 
   render() {
-    const per_page = process.env.LIMIT_PER_PAGE || 15
+    const per_page = Number(process.env.LIMIT_PER_PAGE) || 15
     const pages = Math.ceil(this.props.clinics.length/per_page)
     const current_page = this.props.page
     const start_offset = (current_page - 1) * per_page
-    let start_count = 0
+    const options = {
+      page: 1,  // which page you want to show as default
+      sizePerPageList: [ {
+        text: '20', value: 20
+      }, {
+        text: '50', value: 50
+      }, {
+        text: 'All', value: this.props.clinics.length
+      } ], // you can change the dropdown list for size per page
+      sizePerPage: per_page,  // which size per page you want to locate as default
+      pageStartIndex: 1, // where to start counting the pages
+      paginationSize: 4,  // the pagination bar size.
+      prePage: 'Prev', // Previous page button text
+      nextPage: 'Next', // Next page button text
+      firstPage: 'First', // First page button text
+      lastPage: 'Last', // Last page button text
+      paginationShowsTotal: this.renderShowsTotal,  // Accept bool or function
+      paginationPosition: 'bottom',  // default is bottom, top and both is all available
+      // hideSizePerPage: true, //> You can hide the dropdown for sizePerPage
+      // alwaysShowAllBtns: true, // Always show next and previous button
+      withFirstAndLast: true, //> Hide the going to First and Last page button
+      // clearSearch: true,
+      // clearSearchBtn: this.createCustomClearButton,
+      // deleteBtn: this.handleDeleteButtonClick,
+    }
+    const selectRow = {
+      mode: 'checkbox'
+    }
     if(this.props.clinics.length) {
       // show clinics list
       return (
         <div>
-          <Table bordered hover responsive striped>
-            <thead>
-              <tr>
-                <th>clinicUid </th>
-                <th>clinics</th>
-                <th>email</th>
-                <th>sites</th>
-                <th>Edit</th>
-                <th>Delete</th>
-              </tr>
-            </thead>
-            <tbody>
-              {this.props.clinics.map( (clinic, index) => {
-                if(index >= start_offset && start_count< per_page) {
-                  start_count++
-                  return (
-                    <ClinicListElement key={clinic.clinicUid} clinic={clinic}/>
-                  )
-                }
-              })}
-            </tbody>
-          </Table>
 
-          <Pagination className="clinic-pagination pull-right" bsSize="medium" maxButtons={parseInt(process.env.LIMIT_PER_PAGE)||10} first last next prev boundaryLinks items={pages} activePage={current_page} onSelect={this.changePage}>
-          </Pagination>
+        <BootstrapTable ref='table' data={ this.props.clinics } selectRow={ selectRow } deleteRow striped hover condensed search pagination={ true } options={options}>
+            <TableHeaderColumn dataField='clinicUid' isKey={ true } dataSort={ true } width="100">clinicUid</TableHeaderColumn>
+            <TableHeaderColumn dataField='clinic' dataSort={ true }>clinic</TableHeaderColumn>
+            <TableHeaderColumn dataField='email' dataSort={ true }>email</TableHeaderColumn>
+            <TableHeaderColumn dataField='rand' dataSort={ true }>rand</TableHeaderColumn>
+        </BootstrapTable>
+
+
 
           <ClinicDelete/>
 

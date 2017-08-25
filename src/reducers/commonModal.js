@@ -93,7 +93,7 @@ const reducerClass = {
       clinicUid: id,
       clinic: action.clinic,
       email: action.email,
-      rand: Math.floor(Math.random() * (50 - 10 + 1)) + 10,
+      rand: 'Add:' + Math.floor(Math.random() * (50 - 10 + 1)) + 10,
     })
     return newState
   },
@@ -109,7 +109,7 @@ const reducerClass = {
           clinicUid: action.clinicUid,
           clinic: action.clinic,
           email: action.email,
-          rand: Math.floor(Math.random() * (50 - 10 + 1)) + 10,
+          rand: 'Edit:' + Math.floor(Math.random() * (50 - 10 + 1)) + 10,
         })
         break
       }
