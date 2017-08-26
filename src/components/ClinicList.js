@@ -106,9 +106,15 @@ class ClinicList extends Component {
 
         <BootstrapTable ref='table' data={ this.props.clinics }  striped hover condensed search pagination={ true } options={options}>
             <TableHeaderColumn dataField='clinicUid' isKey={ true } dataSort={ true } width="100">clinicUid</TableHeaderColumn>
-            <TableHeaderColumn dataField='clinic' dataSort={ true }>clinic</TableHeaderColumn>
+            <TableHeaderColumn dataField='clinic' dataSort={ true } filter={ { type: 'TextFilter', delay: 1000 } }>clinic</TableHeaderColumn>
             <TableHeaderColumn dataField='email' dataSort={ true }>email</TableHeaderColumn>
-            <TableHeaderColumn dataField='rand' dataSort={ true }>rand</TableHeaderColumn>
+            <TableHeaderColumn dataField='rand' dataSort={ true } filter={ {
+                type: 'NumberFilter',
+                delay: 1000,
+                numberComparators: [ '=', '>', '<=' ],
+                defaultValue: { number: 0, comparator: '>' }
+              } }
+              >rand</TableHeaderColumn>
             <TableHeaderColumn dataField='clinicUid' dataSort={ false } dataFormat={this.clinicEditButton}>Edit</TableHeaderColumn>
             <TableHeaderColumn dataField='clinicUid' dataSort={ false } dataFormat={this.clinicDeleteButton}>Delete</TableHeaderColumn>
         </BootstrapTable>
